@@ -126,6 +126,57 @@ void UUpscalerSwitcherUtils::ApplyCurrentUpscalerMethod()
 	SetUpscalerMethod(Settings->GetCurrentUpscaler(), false);
 }
 
+void UUpscalerSwitcherUtils::SetDLSSQuality(UDLSSMode Quality, bool bSaveConfig, bool bApplyUpscaling)
+{
+	UUpscalerGameUserSettings* Settings = UUpscalerGameUserSettings::GetUpscalerGameUserSettings();
+	if(!Settings) return;
+
+	Settings->SetDLSSQualityMode(Quality);
+	if(bSaveConfig)
+	{
+		Settings->SaveSettings();
+	}
+
+	if(bApplyUpscaling)
+	{
+		ApplyCurrentUpscalerMethod();
+	}
+}
+
+void UUpscalerSwitcherUtils::SetFSRQuality(EFFXFSR3QualityMode_Custom Quality, bool bSaveConfig, bool bApplyUpscaling)
+{
+	UUpscalerGameUserSettings* Settings = UUpscalerGameUserSettings::GetUpscalerGameUserSettings();
+	if(!Settings) return;
+
+	Settings->SetFSRQualityMode(Quality);
+	if(bSaveConfig)
+	{
+		Settings->SaveSettings();
+	}
+
+	if(bApplyUpscaling)
+	{
+		ApplyCurrentUpscalerMethod();
+	}
+}
+
+void UUpscalerSwitcherUtils::SetFSRFramegen(bool bFrameGenEnabled, bool bSaveConfig, bool bApplyUpscaling)
+{
+	UUpscalerGameUserSettings* Settings = UUpscalerGameUserSettings::GetUpscalerGameUserSettings();
+	if(!Settings) return;
+
+	Settings->SetFSRFrameGenEnabled(bFrameGenEnabled);
+	if(bSaveConfig)
+	{
+		Settings->SaveSettings();
+	}
+
+	if(bApplyUpscaling)
+	{
+		ApplyCurrentUpscalerMethod();
+	}
+}
+
 bool UUpscalerSwitcherUtils::GetFSREnabled()
 {
 	// Find the console variable
@@ -136,4 +187,9 @@ bool UUpscalerSwitcherUtils::GetFSREnabled()
 		return FSR3EnabledValue == 1;
 	}
 	return false;
+}
+
+bool UUpscalerSwitcherUtils::GetDLSSEnabled()
+{
+	return UDLSSLibrary::IsDLSSEnabled();
 }

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "DLSSLibrary.h"
 #include "UpscalerSwitcherTypes.h"
 #include "UObject/Object.h"
 #include "UpscalerSwitcherUtils.generated.h"
@@ -23,6 +24,18 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Upscaler Switcher")
 	static void ApplyCurrentUpscalerMethod();
 
-	UFUNCTION(BlueprintCallable, BlueprintPure)
+	UFUNCTION(BlueprintCallable, Category = "Upscaler Switcher")
+	static void SetDLSSQuality(UDLSSMode Quality, bool bSaveConfig = true, bool bApplyUpscaling = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Upscaler Switcher")
+	static void SetFSRQuality(EFFXFSR3QualityMode_Custom Quality, bool bSaveConfig = true, bool bApplyUpscaling = true);
+
+	UFUNCTION(BlueprintCallable, Category = "Upscaler Switcher")
+	static void SetFSRFramegen(bool bFrameGenEnabled, bool bSaveConfig = true, bool bApplyUpscaling = true);
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Upscaler Switcher")
 	static bool GetFSREnabled();
+
+	UFUNCTION(BlueprintCallable, BlueprintPure, Category = "Upscaler Switcher")
+	static bool GetDLSSEnabled();
 };
