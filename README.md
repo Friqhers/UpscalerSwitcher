@@ -1,4 +1,4 @@
-# UpscalerSwitcher
+# UpscalerSwitcher for Unreal Engine 5.3
 
 The `UpscalerSwitcher` module is a plugin for Unreal Engine that allows dynamic switching between different upscaling methods such as FSR and DLSS.
 
