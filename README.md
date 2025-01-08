@@ -62,5 +62,37 @@ Settings->SetDLSSQualityMode(EDLSSQualityMode::Performance);
 UUpscalerSwitcherUtils::ApplyCurrentUpscalerMethod();
 ```
 
+### Automatically Apply the Saved Upscaling Method on Game Start
+
+To ensure that your game automatically applies the last saved upscaling method (e.g., DLSS, FSR, or native resolution) upon game startup, you should override the `Init` function in your custom `GameInstance` class. This ensures the saved upscaling preferences are applied seamlessly without requiring manual input from the player.
+
+Follow these steps:
+
+1. Open your `GameInstance` header file and define the `Init` function as follows:
+
+```h
+UCLASS()
+class YOURPROJECT_API UYourGameInstance : public UGameInstance
+{
+    GENERATED_BODY()
+
+public:
+    // Override the Init function to apply the current upscaling method on game start
+    virtual void Init() override;
+};
+```
+
+2. In the corresponding `GameInstance` source file, implement the `Init` function:
+
+```cpp
+void UYourGameInstance::Init()
+{
+    // Call the parent class's Init function to maintain existing initialization logic
+    Super::Init();
+
+    // Apply the saved upscaling method (e.g., DLSS, FSR, or None) from the last game session
+    UUpscalerSwitcherUtils::ApplyCurrentUpscalerMethod();
+}
+```
 ## License
 This project is licensed under the CC BY-NC License.
