@@ -33,7 +33,7 @@ You can enable or disable upscaling methods using the `UUpscalerSwitcherUtils` c
 ```cpp
 #include "UpscalerSwitcherUtils.h"
 
-// Enable FSR (FidelityFX Super Resolution) for upscaling
+// Enable FSR for upscaling
 // If another upscaler (e.g., DLSS) is currently enabled, it will be disabled before enabling FSR
 UUpscalerSwitcherUtils::SetUpscalerMethod(EUpscaler::FSR, true);
 
