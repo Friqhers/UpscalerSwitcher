@@ -36,7 +36,7 @@ You can enable or disable upscaling methods using the `UUpscalerSwitcherUtils` c
 // Enable FSR
 UUpscalerSwitcherUtils::SetUpscalerMethod(EUpscaler::FSR, true);
 
-// Disable FSR
+// Disable Upscaling
 UUpscalerSwitcherUtils::SetUpscalerMethod(EUpscaler::None, true);
 ```
 ### Adjusting Quality Settings
