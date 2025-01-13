@@ -3,22 +3,27 @@
 	"Version": 1,
 	"VersionName": "1.0",
 	"FriendlyName": "UpscalerSwitcher",
-	"Description": "Switches upscale methods like DLSS and FSR",
+	"Description": "Switches upscaler methods like DLSS and FSR",
 	"Category": "Other",
 	"CreatedBy": "Penguru Games",
-	"CreatedByURL": "",
-	"DocsURL": "",
+	"CreatedByURL": "https://pengurugames.com/",
+	"DocsURL": "https://github.com/Friqhers/UpscalerSwitcherDocs",
 	"MarketplaceURL": "",
-	"SupportURL": "",
+	"SupportURL": "mailto:support@pengurugames.com",
 	"CanContainContent": true,
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
+	"FabURL": "com.epicgames.launcher://ue/Fab/a86aad65-b41b-4dbf-a0b1-370fd0aa185a/"
+	"EngineVersion": "5.3.2"
 	"Modules": [
 		{
 			"Name": "UpscalerSwitcher",
 			"Type": "Runtime",
-			"LoadingPhase": "Default"
+			"LoadingPhase": "Default",
+			"PlatformAllowList": [
+				"Win64"
+			]
 		}
 	]
 }
