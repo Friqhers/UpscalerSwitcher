@@ -4,6 +4,10 @@ using UnrealBuildTool;
 
 public class UpscalerSwitcher : ModuleRules
 {
+	protected virtual bool IsSupportedPlatform(ReadOnlyTargetRules Target)
+	{
+		return Target.Platform == UnrealTargetPlatform.Win64;
+	}
 	public UpscalerSwitcher(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
@@ -30,6 +34,8 @@ public class UpscalerSwitcher : ModuleRules
 			}
 			);
 			
+		bool bPlatformSupportsDLSS = IsSupportedPlatform(Target);
+		PrivateDefinitions.Add("WITH_DLSS=" + (bPlatformSupportsDLSS ? '1' : '0'));
 		
 		PrivateDependencyModuleNames.AddRange(
 			new string[]
@@ -37,9 +43,7 @@ public class UpscalerSwitcher : ModuleRules
 				"CoreUObject",
 				"Engine",
 				"Slate",
-				"SlateCore",
-				"DLSS",
-				"DLSSBlueprint",
+				"SlateCore"
 				// ... add private dependencies that you statically link with here ...	
 			}
 			);

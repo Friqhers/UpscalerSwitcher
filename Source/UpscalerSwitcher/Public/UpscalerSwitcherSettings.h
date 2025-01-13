@@ -1,9 +1,10 @@
+// Penguru Games © 2025 Mehmet Furkan Gülmez. All Rights Reserved
+
 #pragma once
 
 
 #include "UpscalerSwitcherTypes.h"
 #include "UObject/Object.h"
-#include "DLSSLibrary.h"
 #include "UpscalerSwitcherSettings.generated.h"
 
 UCLASS(Config = Engine, DefaultConfig, DisplayName="Upscaler Switcher")
@@ -17,7 +18,7 @@ public:
 
 	/** Default DLSS mode to be applied (e.g., Quality, Performance)*/
 	UPROPERTY(Config, EditAnywhere, Category = "Settings", DisplayName = "Default DLSS Mode")
-	UDLSSMode DefaultDLSSMode = UDLSSMode::Quality;
+	UDLSSMode_Custom DefaultDLSSMode = UDLSSMode_Custom::Off;
 
 	/** Enables or disables DLSS Frame Generation by default */
 	UPROPERTY(Config, EditAnywhere, Category = "Settings", DisplayName = "Default DLSS Frame Gen Enabled")

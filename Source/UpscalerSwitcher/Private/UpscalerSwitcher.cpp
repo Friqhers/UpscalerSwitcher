@@ -1,4 +1,4 @@
-// Copyright Epic Games, Inc. All Rights Reserved.
+// Penguru Games © 2025 Mehmet Furkan Gülmez. All Rights Reserved
 
 #include "UpscalerSwitcher.h"
 #include "Developer/Settings/Public/ISettingsModule.h"
