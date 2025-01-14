@@ -50,10 +50,10 @@ public:
 	FFSRModeInformation(const EFFXFSR3QualityMode_Custom Quality, const bool FrameGenEnabled):
 	Quality(Quality), bFrameGenEnabled(FrameGenEnabled)
 	{}
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Upscaler Switcher|Settings")
 	EFFXFSR3QualityMode_Custom Quality;
 
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Upscaler Switcher|Settings")
 	bool bFrameGenEnabled;
 };
 
@@ -72,11 +72,11 @@ public:
 	FDLSSModeInformation(const UDLSSMode_Custom Quality, const float OptScreenPercentage,const bool FrameGenEnabled):
 	Quality(Quality), OptimalScreenPercentage(OptScreenPercentage), bFrameGenEnabled(FrameGenEnabled)
 	{}
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Upscaler Switcher|Settings")
 	UDLSSMode_Custom Quality;
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Upscaler Switcher|Settings")
 	float OptimalScreenPercentage;
-	UPROPERTY(BlueprintReadWrite)
+	UPROPERTY(BlueprintReadWrite, Category = "Upscaler Switcher|Settings")
 	bool bFrameGenEnabled;
 
 	

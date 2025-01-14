@@ -2,6 +2,9 @@
 
 #include "UpscalerSwitcherUtils.h"
 #include "UpscalerGameUserSettings.h"
+//#include "Runtime/Core/Public/HAL/IConsoleManager.h"
+#include "HAL/IConsoleManager.h"
+#include "Engine/Engine.h"
 
 DEFINE_LOG_CATEGORY_STATIC(LogUpscalerUtils, Log, All);
 
