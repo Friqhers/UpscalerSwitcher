@@ -1,12 +1,12 @@
-# UpscalerSwitcher Plugin for Unreal Engine 5.3
+# UpscalerSwitcher Plugin for Unreal Engine
 
-The `UpscalerSwitcher` module is a plugin for Unreal Engine that allows dynamic switching between different upscaling methods such as FSR and DLSS.
+The `UpscalerSwitcher` is a plugin for Unreal Engine that allows dynamic switching between different upscaling methods such as FSR and DLSS.
 
 ## Features
 
 - Enable/Disable FSR and DLSS upscaling.
 - Switch between different upscaling methods at runtime.
-- Adjust screen percentage and quality settings for each upscaling method.
+- Adjust quality settings for each upscaling method.
 
 ## Installation
 
@@ -23,6 +23,8 @@ The `UpscalerSwitcher` module is a plugin for Unreal Engine that allows dynamic 
     ```
 
 3. Rebuild your project to include the plugin.
+4. Set your GameUserSettings class to UpscalerGameUserSettings in Project Settings->Engine-General Settings->GameUserSettingsClass.
+5. Download DLSS and FSR plugins from their respective site and include them to your project.
 
 ## Usage
 
@@ -33,34 +35,86 @@ You can enable or disable upscaling methods using the `UUpscalerSwitcherUtils` c
 ```cpp
 #include "UpscalerSwitcherUtils.h"
 
-// Enable FSR for upscaling
 // If another upscaler (e.g., DLSS) is currently enabled, it will be disabled before enabling FSR
-UUpscalerSwitcherUtils::SetUpscalerMethod(EUpscaler::FSR, true);
+// Enable saved FSR mode 
+UUpscalerSwitcherUtils::ApplyFSR(FFSRModeInformation(Settings->GetFSRQualityMode(),
+                                 Settings->GetFSRFrameGenEnabled()));
 
-// Enable DLSS for upscaling
 // This will first disable any previously enabled upscaling method (e.g., FSR) and then enable DLSS
-UUpscalerSwitcherUtils::SetUpscalerMethod(EUpscaler::DLSS, true);
+// Enable saved DLSS mode
+UUpscalerSwitcherUtils::ApplyDLSS(FDLSSModeInformation(Settings->GetDLSSQualityMode(),
+                                    Settings->GetDLSSOptimalScreenPercentage(), Settings->GetDLSSFrameGenEnabled()));
 
 // Disable all upscaling methods (FSR, DLSS, etc.), reverting to native resolution rendering
-UUpscalerSwitcherUtils::SetUpscalerMethod(EUpscaler::None, true);
+UUpscalerSwitcherUtils::DisableUpscaling();
 ```
 ### Adjusting Quality Settings
 
-Adjust the quality settings for FSR and DLSS using the UUpscalerGameUserSettings class:
+#### Adjusting Quality Setting for DLSS
+
+Example c++ code to adjust the quality setting for the DLSS:
 ```cpp
 #include "UpscalerGameUserSettings.h"
 #include "UpscalerSwitcherUtils.h"
-
-// Set FSR quality mode
+#include "DLSSLibrary.h" // PS. Dont forget to add DLSSBlueprint module in to your project.Build.cs like PrivateDependencyModuleNames.AddRange(new string[] {"DLSSBlueprint"});
+ 
+// Get settings class
 UUpscalerGameUserSettings* Settings = UUpscalerGameUserSettings::GetUpscalerGameUserSettings();
-Settings->SetFSRQualityMode(EFSRQualityMode::Quality);
 
-// Set DLSS quality mode
-Settings->SetDLSSQualityMode(EDLSSQualityMode::Performance);
+// Set DLSS quality mode to performance
+Settings->SetDLSSQualityMode(UDLSSMode_Custom::Performance);
 
-// Apply the quality mode
-UUpscalerSwitcherUtils::ApplyCurrentUpscalerMethod();
+// Get optimal screen percentage for the quality mode
+bool bIsSupported, bIsFixedScreenPercentage;
+float OptimalScreenPercentage, MinScreenPercentage, MaxScreenPercentage, OptimalSharpness;
+UDLSSLibrary::GetDLSSModeInformation(
+    Settings->GetDLSSQualityMode(),
+    Settings->GetScreenResolution(),
+    bIsSupported,OptimalScreenPercentage,
+    bIsFixedScreenPercentage,MinScreenPercentage,
+    MaxScreenPercentage, OptimalSharpness
+    );
+
+// Save the optimal screen percentage
+Settings->SetDLSSOptimalScreenPercentage(OptimalScreenPercentage);
+
+// Apply the current saved upscaler (DLSS) by Util function
+UUpscalerSwitcherUtils::ApplySavedUpscaler();
+
+// Also you can call the ApplySettings function of UpscalerGameUserSettings which will also call ApplySavedUpscaler
+Settings->ApplySettings(false);
 ```
+
+Example Blueprint usage:
+![dlss_usage](https://github.com/user-attachments/assets/6590ab37-b056-4543-ba21-e2540e1a62a6)
+
+#### Adjusting Quality Setting for FSR
+
+Example C++ code to adjust the quality setting for the FSR:
+```cpp
+#include "UpscalerGameUserSettings.h"
+#include "UpscalerSwitcherUtils.h"
+#include "DLSSLibrary.h" // PS. Dont forget to add DLSSBlueprint module in to your project.Build.cs like PrivateDependencyModuleNames.AddRange(new string[] {"DLSSBlueprint"});
+ 
+// Get settings class
+UUpscalerGameUserSettings* Settings = UUpscalerGameUserSettings::GetUpscalerGameUserSettings();
+
+// Set FSR quality mode to performance
+Settings->SetFSRQualityMode(EFFXFSR3QualityMode_Custom::Performance);
+
+// Set FSR frame gen enabled
+Settings->SetFSRFrameGenEnabled(true);
+
+// Apply the current saved upscaler (DLSS)
+UUpscalerSwitcherUtils::ApplySavedUpscaler();
+// Also you can call the ApplySettings function of UpscalerGameUserSettings which will also call ApplySavedUpscaler
+Settings->ApplySettings(false);
+```
+
+Example Blueprint usage:
+![fsr_usage](https://github.com/user-attachments/assets/3ec4227f-fd51-46fc-a744-6c4a14fa53da)
+
+
 
 ### Automatically Apply the Saved Upscaling Method on Game Start
 
@@ -91,8 +145,6 @@ void UYourGameInstance::Init()
     Super::Init();
 
     // Apply the saved upscaling method (e.g., DLSS, FSR, or None) from the last game session
-    UUpscalerSwitcherUtils::ApplyCurrentUpscalerMethod();
+    UUpscalerSwitcherUtils::ApplySavedUpscaler();
 }
 ```
-## License
-This project is licensed under the CC BY-NC License.
