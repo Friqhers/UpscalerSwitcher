@@ -14,8 +14,8 @@
 	"IsBetaVersion": false,
 	"IsExperimentalVersion": false,
 	"Installed": false,
-	"FabURL": "com.epicgames.launcher://ue/Fab/a86aad65-b41b-4dbf-a0b1-370fd0aa185a/"
-	"EngineVersion": "5.3.2"
+	"FabURL": "com.epicgames.launcher://ue/Fab/a86aad65-b41b-4dbf-a0b1-370fd0aa185a/",
+	"EngineVersion": "5.3",
 	"Modules": [
 		{
 			"Name": "UpscalerSwitcher",
